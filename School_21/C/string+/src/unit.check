@@ -1,0 +1,355 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <string.h>
+#include <check.h>
+
+#include "s21_string.h"
+
+#test INSERT1
+char string1 [10] = "HELLO ";
+char string2 [15] = " World ";
+int index = 0;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_str_eq(" World HELLO ", result);
+free(result);
+
+#test INSERT2
+char string1 [10] = "HELLO ";
+char string2 [15] = " World ";
+int index = 5;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_str_eq("HELLO World  ", result);
+free(result);
+
+#test INSERT3
+char string1 [10] = "HELLO ";
+char string2 [15] = " World ";
+int index = 6;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_str_eq("HELLO  World ", result);
+free(result);
+
+#test INSERT4
+char string1 [10] = "HELLO ";
+char string2 [15] = " World ";
+int index = 1;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_str_eq("H World ELLO ", result);
+free(result);
+
+#test INSERT5
+char string1 [10] = "HELLO ";
+char *string2 = NULL;
+int index = 6;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_ptr_eq(result, NULL);
+free(result);
+
+#test INSERT6
+char *string1 = NULL;
+char *string2 = NULL;
+int index = 6;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_ptr_eq(result, NULL);
+free(result);
+
+#test INSERT7
+char *string1 = NULL;
+char string2 [15] = " World ";
+int index = 6;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_ptr_eq(result, NULL);
+free(result);
+
+#test INSERT8
+char string1 [] = "HELLO ";
+char string2 [15] = " World ";
+int index = 9;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_ptr_eq(result, NULL);
+free(result);
+
+#test INSERT9
+char string1 [] = "HELLO ";
+char string2 [15] = " World ";
+int index = -1;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_ptr_eq(result, NULL);
+free(result);
+
+#test INSERT10
+char string1 [] = "";
+char string2 [] = " World ";
+int index = 0;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_str_eq(" World ", result);
+free(result);
+
+#test INSERT11
+char string1[] = "Hello";
+char string2[] = " World";
+int index = 0;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_str_eq(" WorldHello", result);
+free(result);
+
+#test INSERT12
+char string1[] = "HelloWorld";
+char string2[] = " Nice";
+int index = 5;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_str_eq("Hello NiceWorld", result);
+free(result);
+
+#test INSERT13
+char string1[] = "Hello";
+char string2[] = " \nWorld";
+int index = 5;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_str_eq("Hello \nWorld", result);
+free(result);
+
+#test INSERT14
+char string1[] = "Hello";
+char string2[] = "\tWorld";
+int index = 5;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_str_eq("Hello\tWorld", result);
+free(result);
+
+#test INSERT15
+char string1[] = "Hello";
+char string2[] = "\"World\"";
+int index = 5;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_str_eq("Hello\"World\"", result);
+free(result);
+
+#test INSERT16
+char string1[] = "Hello";
+char string2[] = "\\World";
+int index = 5;
+
+char *result = s21_insert(string1, string2, index);
+ck_assert_str_eq("Hello\\World", result);
+free(result);
+
+#test TO_UPPER1
+char string1[] = "Hello";
+
+char *result = s21_to_upper(string1);
+ck_assert_str_eq("HELLO", result);
+free(result);
+
+#test TO_UPPER2
+char string1[] = " Hello World ";
+
+char *result = s21_to_upper(string1);
+ck_assert_str_eq(" HELLO WORLD ", result);
+free(result);
+
+#test TO_UPPER3
+char string1[] = " HELLO WORLD ";
+
+char *result = s21_to_upper(string1);
+ck_assert_str_eq(" HELLO WORLD ", result);
+free(result);
+
+#test TO_UPPER4
+char string1[] = "";
+
+char *result = s21_to_upper(string1);
+ck_assert_str_eq("", result);
+free(result);
+
+#test TO_UPPER5
+char *string = NULL;
+
+char *result = s21_to_upper(string);
+ck_assert_ptr_eq(result, NULL);
+free(result);
+
+#test TO_UPPER6
+char string1[] = "12345!@#";
+char *result = s21_to_upper(string1);
+ck_assert_str_eq("12345!@#", result);
+free(result);
+
+#test TO_UPPER7
+char string1[] = "a1b2C3";
+char *result = s21_to_upper(string1);
+ck_assert_str_eq("A1B2C3", result);
+free(result);
+
+#test TO_LOWER1
+char string1[] = "Hello";
+
+char *result = s21_to_lower(string1);
+ck_assert_str_eq("hello", result);
+free(result);
+
+#test TO_LOWER2
+char string1[] = " Hello World ";
+
+char *result = s21_to_lower(string1);
+ck_assert_str_eq(" hello world ", result);
+free(result);
+
+#test TO_LOWER3
+char string1[] = " HELLO WORLD ";
+
+char *result = s21_to_lower(string1);
+ck_assert_str_eq(" hello world ", result);
+free(result);
+
+#test TO_LOWER4
+char string1[] = "";
+
+char *result = s21_to_lower(string1);
+ck_assert_str_eq("", result);
+free(result);
+
+#test TTO_LOWER5
+char *string = NULL;
+
+char *result = s21_to_lower(string);
+ck_assert_ptr_eq(result, NULL);
+free(result);
+
+#test TO_LOWER6
+char string1[] = "12345!@#";
+char *result = s21_to_lower(string1);
+ck_assert_str_eq("12345!@#", result);
+free(result);
+
+#test TO_LOWER7
+char string1[] = "a1b2C3";
+char *result = s21_to_lower(string1);
+ck_assert_str_eq("a1b2c3", result);
+free(result);
+
+#test TRIM1
+char arr1[] = " Hello\t!\tWorld\n   ";
+char trim_chars[] = " ";
+char *result = s21_trim(arr1, trim_chars);
+ck_assert_str_eq("Hello\t!\tWorld\n", result);
+free(result);
+
+#test TRIM2
+char arr2[] = "eHello Worldl";
+char trim_chars[] = "el ";
+char *result = s21_trim(arr2, trim_chars);
+ck_assert_str_eq("Hello World", result);
+free(result);
+
+#test TRIM3
+char arr3[] = "l|\t\tl\t\t| ";
+char trim_chars[] = "l\t";
+char *result = s21_trim(arr3, trim_chars);
+ck_assert_str_eq("|\t\tl\t\t| ", result);
+free(result);
+
+#test TRIM4
+char arr4[] = "ellllel Hello World\n New world elellelelel";
+char trim_chars[] = "el ";
+char *result = s21_trim(arr4, trim_chars);
+ck_assert_str_eq("Hello World\n New world", result);
+free(result);
+
+#test TRIM5
+char arr5[] = " eVoidl ";
+char trim_chars[] = " el";
+char *result = s21_trim(arr5, trim_chars);
+ck_assert_str_eq("Void", result);
+free(result);
+
+#test TRIM6
+char arr6[] = "      l      ";
+char trim_chars[] = " l";
+char *result = s21_trim(arr6, trim_chars);
+ck_assert_str_eq("", result);
+free(result);
+
+#test TRIM7
+char arr7[] = "                    l";
+char trim_chars[] = " l";
+char *result = s21_trim(arr7, trim_chars);
+ck_assert_str_eq("", result);
+free(result);
+
+#test TRIM8
+char arr8[] = "   \t  Hello World!  \n  ";
+char trim_chars[] = " ";
+char *result = s21_trim(arr8, trim_chars);
+ck_assert_str_eq("\t  Hello World!  \n", result);
+free(result);
+
+#test TRIM9
+char arr9[] = "    \t   \n  ";
+char trim_chars[] = " \t\n";
+char *result = s21_trim(arr9, trim_chars);
+ck_assert_str_eq("", result);
+free(result);
+
+#test TRIM10
+char arr10[] = "   Text with spaces  ";
+char trim_chars[] = " ";
+char *result = s21_trim(arr10, trim_chars);
+ck_assert_str_eq("Text with spaces", result);
+free(result);
+
+#test TRIM11
+char arr11[] = "\tTabs\tand spaces\t";
+char trim_chars[] = "\t ";
+char *result = s21_trim(arr11, trim_chars);
+ck_assert_str_eq("Tabs\tand spaces", result);
+free(result);
+
+#test TRIM12
+char arr12[] = "     \tHello World!    ";
+char trim_chars[] = " \t\n";
+char *result = s21_trim(arr12, trim_chars);
+ck_assert_str_eq("Hello World!", result);
+free(result);
+
+#test TRIM13
+char arr13[] = "";
+char trim_chars[] = " ";
+char *result = s21_trim(arr13, trim_chars);
+ck_assert_str_eq("", result);
+free(result);
+
+#test TRIM14
+char *arr14 = NULL;
+char trim_chars[] = " ";
+char *result = s21_trim(arr14, trim_chars);
+ck_assert_ptr_eq(result, NULL);
+free(result);
+
+#test TRIM15
+char *arr15 = NULL;
+char *result = s21_trim(arr15, NULL);
+ck_assert_ptr_eq(result, NULL);
+free(result);
+
+#test TRIM16
+char arr16[] = "     \tHello World!    ";
+char *result = s21_trim(arr16, NULL);
+ck_assert_str_eq("Hello World!", result);
+free(result);
